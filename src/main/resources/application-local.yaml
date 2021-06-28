@@ -1,0 +1,12 @@
+#local profile configuration, everything except overridden configuration should be inherited from application.yaml
+
+#logging level when running locally
+logging:
+  level:
+    reactor:
+      netty:
+        http:
+          client: info
+    com:
+      baremetalcode:
+        functionalreactive: debug

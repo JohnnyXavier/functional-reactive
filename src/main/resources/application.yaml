@@ -1,0 +1,49 @@
+#spring app config
+spring:
+  application:
+    name: @project.name@
+    version: @project.version@
+  banner:
+    location: app-banner.txt
+  output:
+    ansi:
+      enabled: always
+
+#actuator config
+management:
+  server:
+    port: 18081
+
+#netty config
+server:
+  port: 8081
+
+# hazelcast config, all defaults except for cluster name which is required by embedded hazelcast to build properly
+hazelcast:
+  cluster-name: bare-metal-cluster
+
+#application configuration keys
+app-config:
+  external-vendor:
+    base-url: https://jsonplaceholder.typicode.com/
+    path-posts-all: /posts
+    path-post-by-id: /posts/%s
+    path-comments-by-post-id: /posts/%s/comments
+  strategies:
+    default-strategy: default
+    posts-all: posts-all
+    post-by-id: post-by-id
+    comments-by-post-id: comments-by-post-id
+  headers:
+    strategy-header: strategy-header
+    skip-all-header: skip-all-header
+    post-id-header: post-id-header
+    cache-key-header: cache-key-header
+  cache:
+    posts-all: ${app-config.strategies.posts-all}-map
+    posts-all-ttl: 600
+    posts-by-id: ${app-config.strategies.post-by-id}-map
+    posts-by-id-ttl: 3600
+    comments-by-posts-by-id: ${app-config.strategies.comments-by-post-id}-map
+    comments-by-posts-by-id-ttl: 10
+

@@ -1,0 +1,4 @@
+#hazelcast config imported from the main application configuration so we centralize all configuration
+hazelcast:
+  import:
+    - application.yaml
