@@ -41,9 +41,9 @@ app-config:
     cache-key-header: cache-key-header
   cache:
     posts-all: ${app-config.strategies.posts-all}-map
-    posts-all-ttl: 600
+    posts-all-ttl: 5
     posts-by-id: ${app-config.strategies.post-by-id}-map
-    posts-by-id-ttl: 3600
+    posts-by-id-ttl: 30
     comments-by-posts-by-id: ${app-config.strategies.comments-by-post-id}-map
     comments-by-posts-by-id-ttl: 10
 
