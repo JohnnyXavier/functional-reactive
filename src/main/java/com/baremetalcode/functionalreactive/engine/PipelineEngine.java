@@ -88,7 +88,7 @@ public class PipelineEngine
          * 6: we put the processed data into the cache asynchronously (fire & forget)
          * 7: in case one of the steps throws an error, we gracefully handle it and move on, we do not crash the pipeline
          *
-         * result: we return the message properly processed with payload and httpStatus, and in case the data was new or refreshed, we put
+         * result: we return the message properly processed with payload and httpStatus, and in case the data was new or refreshed, we put it in the cache
          * */
         return Mono.just( message )
                    .filter( message1 -> true )
