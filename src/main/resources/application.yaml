@@ -18,10 +18,6 @@ management:
 server:
   port: 8081
 
-# hazelcast config, all defaults except for cluster name which is required by embedded hazelcast to build properly
-hazelcast:
-  cluster-name: bare-metal-cluster
-
 #application configuration keys
 app-config:
   external-vendor:
@@ -41,9 +37,9 @@ app-config:
     cache-key-header: cache-key-header
   cache:
     posts-all: ${app-config.strategies.posts-all}-map
-    posts-all-ttl: 5
+    posts-all-ttl: 30
     posts-by-id: ${app-config.strategies.post-by-id}-map
-    posts-by-id-ttl: 30
+    posts-by-id-ttl: 300
     comments-by-posts-by-id: ${app-config.strategies.comments-by-post-id}-map
     comments-by-posts-by-id-ttl: 10
 

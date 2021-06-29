@@ -1,4 +1,22 @@
-#hazelcast config imported from the main application configuration so we centralize all configuration
+# hazelcast config, most defaults and experimenting for the nicest management center experience.
 hazelcast:
-  import:
-    - application.yaml
+  cluster-name: bare-metal-cluster
+  # delete everything under this line if you run into problems, defaults should suffice
+  management-center:
+    scripting-enabled: true
+  metrics:
+    enabled: true
+  map:
+    default:
+      statistics-enabled: true
+      per-entry-stats-enabled: true
+      near-cache:
+        time-to-live-seconds: 0
+        max-idle-seconds: 0
+        invalidate-on-change: true
+        in-memory-format: BINARY
+        cache-local-entries: true
+        eviction:
+          eviction-policy: LFU
+          max-size-policy: ENTRY_COUNT
+          size: 100
