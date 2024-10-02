@@ -4,7 +4,7 @@ import com.baremetalcode.functionalreactive.configuration.AppConfig;
 import com.baremetalcode.functionalreactive.domain.engine.PipelineMessage;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -80,13 +80,13 @@ public class VendorWebclient
                 .toEntity( String.class )
                 .flatMap( responseEntity ->
                 {
-                    final String body = responseEntity.getBody();
-                    final HttpStatus httpStatus = responseEntity.getStatusCode();
+                    final String body = Optional.ofNullable(responseEntity.getBody()).orElse("");
+                    final HttpStatusCode httpStatusCode = responseEntity.getStatusCode();
 
-                    log.debug( "received from vendor - status-code: {}", httpStatus.value() );
+                    log.debug( "received from vendor - status-code: {}", httpStatusCode.value() );
                     log.debug( "received from vendor - body: {}", body.replace( "\n", "" ) );
 
-                    message.setHttpStatus( httpStatus );
+                    message.setHttpStatusCode( httpStatusCode );
                     message.setDataPayload( body );
 
                     return Mono.just( message );
@@ -94,12 +94,12 @@ public class VendorWebclient
                 .onErrorResume( WebClientResponseException.class, responseException ->
                 {
                     final String errorMessage = responseException.getMessage();
-                    final HttpStatus httpStatus = responseException.getStatusCode();
+                    final HttpStatusCode httpStatusCode = responseException.getStatusCode();
 
-                    log.error( "ERROR from vendor - error-code: {}", httpStatus.value() );
+                    log.error( "ERROR from vendor - error-code: {}", httpStatusCode.value() );
                     log.error( "ERROR from vendor - errorMessage: {}", errorMessage );
 
-                    message.setHttpStatus( httpStatus );
+                    message.setHttpStatusCode( httpStatusCode );
                     message.setDataPayload( errorMessage );
 
                     return Mono.just( message );

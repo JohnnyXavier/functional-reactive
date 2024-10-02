@@ -6,12 +6,18 @@ hazelcast:
     scripting-enabled: true
   metrics:
     enabled: true
+  # adding multicast for autodiscovery of members, this way you can run multiple instances of the app sharing the same
+  # hazelcast cluster =)!
+  network:
+    join:
+      multicast:
+        enabled: true
   map:
     default:
       statistics-enabled: true
       per-entry-stats-enabled: true
       near-cache:
-        time-to-live-seconds: 0
+        time-to-live-seconds: 5
         max-idle-seconds: 0
         invalidate-on-change: true
         in-memory-format: BINARY

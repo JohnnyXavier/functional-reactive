@@ -1,6 +1,7 @@
 package com.baremetalcode.functionalreactive.services.cacheservice.strategies;
 
 import com.baremetalcode.functionalreactive.services.cacheservice.strategies.base.IMDGCacheServiceStrategy;
+import com.hazelcast.core.HazelcastInstance;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,6 +12,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class PostsAllDataGridServiceStrategy extends IMDGCacheServiceStrategy
 {
+    public PostsAllDataGridServiceStrategy(final HazelcastInstance cache) {
+        super(cache);
+    }
+
     @Override
     public String getStrategyId()
     {

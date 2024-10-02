@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.1</version>
+        <version>3.3.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -17,9 +17,8 @@
     <description>Demo project for the reactive stack and functional style</description>
 
     <properties>
-        <java.version>16</java.version>
-        <testcontainers.version>1.15.3</testcontainers.version>
-        <hazelcast.version>4.2</hazelcast.version>
+        <java.version>21</java.version>
+        <hazelcast.version>5.3.8</hazelcast.version>
     </properties>
 
     <dependencies>
@@ -37,7 +36,7 @@
         <!-- IMDG dependencies ::: START-->
         <dependency>
             <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast-all</artifactId>
+            <artifactId>hazelcast-spring</artifactId>
             <version>${hazelcast.version}</version>
         </dependency>
         <!-- IMDG dependencies ::: END-->

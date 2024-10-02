@@ -102,8 +102,8 @@ public class PipelineEngine
                 {
                     log.error( "error on pipeline: {}", error.getMessage() );
 
-                    Optional.ofNullable( message.getHttpStatus() )
-                            .ifPresentOrElse( ignoreIfNotNull -> Function.identity(), () -> message.setHttpStatus( HttpStatus.INTERNAL_SERVER_ERROR ) );
+                    Optional.ofNullable( message.getHttpStatusCode() )
+                            .ifPresentOrElse( ignoreIfNotNull -> Function.identity(), () -> message.setHttpStatusCode( HttpStatus.INTERNAL_SERVER_ERROR ) );
 
                     return Mono.just( message );
                 } );

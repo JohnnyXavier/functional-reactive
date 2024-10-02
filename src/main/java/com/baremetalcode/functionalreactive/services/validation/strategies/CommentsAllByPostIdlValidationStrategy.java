@@ -28,7 +28,7 @@ public class CommentsAllByPostIdlValidationStrategy extends ValidationServiceStr
     @Override
     public Mono<PipelineMessage> validate( final PipelineMessage message )
     {
-        String postId = message.getHeaders().getFirst( getConfig().getHeaders().getPostIdHeader() );
+        final String postId = message.getHeaders().getFirst( getConfig().getHeaders().getPostIdHeader() );
 
         return Optional.ofNullable( postId )
                        .map( ignoreAndReturn ->

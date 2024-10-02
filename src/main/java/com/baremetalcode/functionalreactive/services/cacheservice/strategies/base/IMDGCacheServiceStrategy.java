@@ -4,7 +4,6 @@ import com.baremetalcode.functionalreactive.domain.engine.PipelineMessage;
 import com.baremetalcode.functionalreactive.services.cacheservice.CacheServiceStrategy;
 import com.hazelcast.core.HazelcastInstance;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -27,22 +26,24 @@ import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 @Log4j2
 public abstract class IMDGCacheServiceStrategy extends CacheServiceStrategy
 {
-    @Qualifier( "hazelcastInstance" )
-    @Autowired
-    private HazelcastInstance cache;
+    private final HazelcastInstance cache;
+
+    public IMDGCacheServiceStrategy(@Qualifier( "hazelcastInstance" ) final HazelcastInstance cache ) {
+        this.cache = cache;
+    }
 
     @Override
     public Mono<PipelineMessage> put( final PipelineMessage message )
     {
-        String cacheKey = message.getHeaders().getFirst( getConfig().getHeaders().getCacheKeyHeader() );
-        String cacheValue = message.getDataPayload();
+        final String cacheKey = message.getHeaders().getFirst( getConfig().getHeaders().getCacheKeyHeader() );
+        final String cacheValue = message.getDataPayload();
 
         Optional.ofNullable( cacheKey )
                 .ifPresentOrElse( key ->
                         {
                             try
                             {
-                                cache.getMap( getMapName() ).putAsync( cacheKey, message.getDataPayload(), getTTL(), TimeUnit.SECONDS );
+                                cache.getMap( getMapName() ).putAsync( key, message.getDataPayload(), getTTL(), TimeUnit.SECONDS );
                                 log.debug( "putting record to cache - key: {}, value: {}", key, cacheValue.replace( "\n", "" ) );
                             }
                             catch ( IllegalStateException | IllegalArgumentException exception )
@@ -61,7 +62,7 @@ public abstract class IMDGCacheServiceStrategy extends CacheServiceStrategy
     @Override
     public Mono<PipelineMessage> get( final PipelineMessage message )
     {
-        String cacheKey = message.getHeaders().getFirst( getConfig().getHeaders().getCacheKeyHeader() );
+        final String cacheKey = message.getHeaders().getFirst( getConfig().getHeaders().getCacheKeyHeader() );
 
         Optional.ofNullable( cacheKey )
                 .ifPresentOrElse( key ->

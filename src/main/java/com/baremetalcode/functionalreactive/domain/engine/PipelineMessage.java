@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 
 
@@ -19,7 +19,7 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 public class PipelineMessage
 {
     private HttpHeaders headers;
-    private HttpStatus httpStatus;
+    private HttpStatusCode httpStatusCode;
     private ServerHttpResponse serverHttpResponse;
     private HttpMethod apiCallMethod;
     private String apiCallPath;

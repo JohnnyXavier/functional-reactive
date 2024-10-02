@@ -27,7 +27,7 @@ public class DefaultHttpServiceStrategy extends HttpServiceStrategy
     public Mono<String> buildResponse( final PipelineMessage message )
     {
         Optional.ofNullable( message.getServerHttpResponse() )
-                .ifPresent( serverHttpResponse -> serverHttpResponse.setStatusCode( message.getHttpStatus() ) );
+                .ifPresent( serverHttpResponse -> serverHttpResponse.setStatusCode( message.getHttpStatusCode() ) );
 
         return Optional.ofNullable( message.getDataPayload() )
                        .map( body ->
